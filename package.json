@@ -1,6 +1,6 @@
 {
   "name": "hls-thumb-gen",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A fork of a service which will generate thumbnails from a live HLS stream.",
   "main": "src/index.js",
   "bin": "src/cli.js",
