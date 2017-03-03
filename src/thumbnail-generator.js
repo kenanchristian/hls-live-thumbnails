@@ -40,6 +40,7 @@ function ThumbnailGenerator(options) {
 		thumbnailWidth: !options.thumbnailHeight ? 150 : null,
 		thumbnailHeight: null,
 		outputNamePrefix: null,
+		singleMode: false,
 		logger: Logger.get('ThumbnailGenerator')
 	}, options || {});
 	if (!opts.playlistUrl) {
@@ -63,6 +64,7 @@ function ThumbnailGenerator(options) {
 	this._outputDir = opts.outputDir;
 	this._tempDir = opts.tempDir;
 	this._outputNamePrefix = opts.outputNamePrefix;
+	this._singleMode = opts.singleMode;
 	this._logger = opts.logger || nullLogger;
 
 	this._resolvedPlaylistUrl = null;
@@ -144,7 +146,7 @@ ThumbnailGenerator.prototype._grabThumbnails = function() {
 		if (this._destroyed) {
 			return;
 		}
-		
+
 		if (!parsed) {
 			this._emit("playlistRemoved");
 			this.destroy();
@@ -178,7 +180,7 @@ ThumbnailGenerator.prototype._grabThumbnails = function() {
 		}
 
 		// time into the playlist to take the next thumbnail
-		var nextThumbnailTime = null; 
+		var nextThumbnailTime = null;
 		var lastLocationSegmentIndex = null;
 		if (lastLocationSN !== null) {
 			lastLocationSegmentIndex = lastLocationSN - firstSN;
@@ -301,17 +303,18 @@ ThumbnailGenerator.prototype._generateThumbnails = function(segment, segmentSN, 
 	var segmentUrl = url.resolve(this._resolvedPlaylistUrl, segment.properties.uri);
 	return this._getUrlBuffer(segmentUrl).then((buffer) => {
 		return utils.ensureExists(this._tempDir).then(() => {
-			var segmentBaseName = this._outputNamePrefix+"-"+segmentSN;
+			var segmentBaseName = this._outputNamePrefix;
+
 			var extension = this._getExtension(segmentUrl);
 			var segmentFileLocation = path.join(this._tempDir, segmentBaseName+"."+extension);
 			return utils.writeFile(segmentFileLocation, buffer).then(() => {
 				var outputBaseFilePath = path.join(this._tempDir, segmentBaseName);
 				return this._generateThumbnailsWithFfmpeg(segmentFileLocation, segment, timeIntoSegment, outputBaseFilePath);
-			}).catch((err) => {
-				utils.unlink(segmentFileLocation);
-				throw err;
+			// }).catch((err) => {
+			// 	//utils.unlink(segmentFileLocation);
+			// 	throw err;
 			}).then((files) => {
-				utils.unlink(segmentFileLocation);
+				//utils.unlink(segmentFileLocation);
 
 				if (this._destroyed) {
 					return Promise.resolve([]);
@@ -324,7 +327,7 @@ ThumbnailGenerator.prototype._generateThumbnails = function(segment, segmentSN, 
 						// might have been just past the end of the file
 						return Promise.resolve(null);
 					}
-					var newFileName = segmentBaseName+"-"+i+".jpg";
+					var newFileName = segmentBaseName+".jpg";
 					var newLocation = path.join(this._outputDir, newFileName);
 					return utils.ensureExists(this._outputDir).then(() => {
 						return utils.move(location, newLocation).then(() => {

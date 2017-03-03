@@ -103,6 +103,7 @@ ThumbnailGeneratorService.prototype._initTempDir = function() {
 ThumbnailGeneratorService.prototype._createServer = function() {
 	var app = express();
 	app.use(bodyParser.urlencoded({ extended: false }));
+	app.use(bodyParser.json());
 
 	app.all('*', (req, res, next) => {
 		if (!this._secret || (req.headers["x-secret"] && req.headers["x-secret"] === this._secret)) {

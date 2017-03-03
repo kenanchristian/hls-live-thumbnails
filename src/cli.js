@@ -14,6 +14,9 @@ var optionDefinitions = [
 	{ name: 'manifestFileName', alias: 'm', type: String},
 	// If url provided use this as a prefix for the thumbnail file names.
 	{ name: 'outputNamePrefix', type: String, defaultValue: null },
+
+	// If provided will always replace file
+	{ name: 'singleMode', type: Boolean, defaultValue: false },
 	
 	// If provided start a server running on this port listening for commands
 	{ name: 'port', alias: 'p', type: Number, defaultValue: null },

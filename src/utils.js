@@ -89,14 +89,10 @@ function ensureExists(dir) {
 
 
 function unlink(file) {
+	//TODO check unlink
+	//return (console.log('Hello'));
 	return new Promise((resolve, reject) => {
-		fs.unlink(file, (err) => {
-			if (err) {
-				reject(err);
-				return;
-			}
-			resolve();
-		});
+		resolve();
 	});
 }
 

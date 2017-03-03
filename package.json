@@ -1,7 +1,7 @@
 {
-  "name": "hls-live-thumbnails",
-  "version": "1.4.0",
-  "description": "A service which will generate thumbnails from a live HLS stream.",
+  "name": "hls-thumb-gen",
+  "version": "0.0.7",
+  "description": "A fork of a service which will generate thumbnails from a live HLS stream.",
   "main": "src/index.js",
   "bin": "src/cli.js",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:tjenkinson/hls-live-thumbnails.git"
+    "url": "git@github.com:kenanchristian/hls-live-thumbnails.git"
   },
   "keywords": [
     "hls",
@@ -20,12 +20,12 @@
     "m3u8",
     "apple"
   ],
-  "author": "Tom Jenkinson",
+  "author": "Christian Dimas",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tjenkinson/hls-live-thumbnails/issues"
+    "url": "https://github.com/kenanchristian/hls-live-thumbnails/issues"
   },
-  "homepage": "https://github.com/tjenkinson/hls-live-thumbnails",
+  "homepage": "https://github.com/kenanchristian/hls-live-thumbnails",
   "dependencies": {
     "body-parser": "^1.15.2",
     "command-line-args": "^3.0.0",
